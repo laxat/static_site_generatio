@@ -1,0 +1,43 @@
+from typing import Optional
+
+
+class HTMLNode:
+    def __init__(self, tag=None, value=None, children=None, props=None):
+        self.tag = tag
+        self.value = value
+        self.children = children
+        self.props = props
+
+    def __repr__(self):
+        if not self.tag:
+            return f"{self.value}"
+
+        return f"<{self.tag}{self.props_to_html()}>{self.value if self.value else self.children}</{self.tag}>"
+
+    def to_html(self):
+        raise NotImplementedError("Not implemented yet...")
+
+    def props_to_html(self):
+        if self.props is None:
+            return ""
+        start = ""
+        for x, y in self.props.items():
+            start += f' {x}="{y}"'
+        return start
+
+
+class LeafNode(HTMLNode):
+    def __init__(self, tag, value, props=None):
+        super().__init__(tag, value, props=props)
+
+    def __repr__(self):
+        return self.to_html()
+
+    def to_html(self):
+        if not self.value:
+            raise ValueError("All leaf nodes must have a value")
+
+        if not self.tag:
+            return self.value()
+        else:
+            return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
