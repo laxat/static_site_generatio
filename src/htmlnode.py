@@ -1,6 +1,3 @@
-from typing import Optional
-
-
 class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag
@@ -11,7 +8,6 @@ class HTMLNode:
     def __repr__(self):
         if not self.tag:
             return f"{self.value}"
-
         return f"<{self.tag}{self.props_to_html()}>{self.value if self.value else self.children}</{self.tag}>"
 
     def to_html(self):
@@ -36,8 +32,26 @@ class LeafNode(HTMLNode):
     def to_html(self):
         if not self.value:
             raise ValueError("All leaf nodes must have a value")
-
         if not self.tag:
             return self.value()
         else:
             return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+
+
+class ParentNode(HTMLNode):
+    def __init__(self, tag, children, props=None):
+        super().__init__(tag, children=children, props=props)
+
+    def to_html(self):
+        if not self.tag:
+            raise ValueError
+
+        if not self.children:
+            raise ValueError("Parent node needs to have children elements")
+
+        else:
+            html_str = f"<{self.tag}{self.props_to_html()}>"
+            for child in self.children:
+                html_str += child.to_html()
+            html_str += f"</{self.tag}>"
+            return html_str
