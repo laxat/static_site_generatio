@@ -9,10 +9,7 @@ from static_gen import (
 
 
 def main():
-    basepath = argv
-
-    if basepath is None:
-        basepath = "/"
+    basepath = argv[1]
 
     copy_static_to_public("static", "docs")
 
