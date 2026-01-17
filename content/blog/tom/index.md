@@ -48,7 +48,7 @@ Tom Bombadil's inclusion inadvertently shifts focus from the pressing matters of
 - **A Shift in Focus**: His carefree demeanor and ability to withhold the power of the One Ring, while intriguing, distract from the overarching themes of sacrifice and moral complexity.
 - **A Misstep in Continuity**: His segment, charming as it may be, disrupts the journey's continuous build-up towards the looming confrontation with darkness.
 
-## Conclusion
+## Conclusion 
 
 As we ponder the manifold wonders and intricacies of Tolkien's world, it is evident that Tom Bombadil, while delightfully unique, was a narrative anomaly—a whimsical reflection in the mirror of Middle-earth's grand narrative. While his character captivates with a certain mystique, it answers questions that were never asked, leaving readers with more enigmas than revelations.
 

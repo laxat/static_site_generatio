@@ -33,7 +33,7 @@ def extract_title(md):
     raise Exception("No h1 header found")
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     with open(from_path, "r") as f:
@@ -47,6 +47,8 @@ def generate_page(from_path, template_path, dest_path):
 
     html_contents = html_contents.replace("{{ Title }}", title)
     html_contents = html_contents.replace("{{ Content }}", md_html)
+    html_contents = html_contents.replace('href="', f'href="{basepath}')
+    html_contents = html_contents.replace('src="', f'src="{basepath}')
 
     if not os.path.exists(dest_path):
         dest_path = Path(dest_path)
@@ -56,7 +58,7 @@ def generate_page(from_path, template_path, dest_path):
         f.write(html_contents)
 
 
-def generate_pages_recursive(dir_path_content, template_path, dest_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_path, basepath):
     try:
         if not os.path.exists(dir_path_content) and not dest_path.info.exists():
             raise FileNotFoundError("This file path does not exist")
@@ -65,10 +67,12 @@ def generate_pages_recursive(dir_path_content, template_path, dest_path):
             curr_path = os.path.join(dir_path_content, i)
             if os.path.isfile(curr_path) and ".md" in curr_path:
                 index_path = Path(f"{dest_path}/index.html")
-                generate_page(curr_path, template_path, index_path)
+                generate_page(curr_path, template_path, index_path, basepath)
             else:
                 new_dest_path = os.path.join(dest_path, i)
                 dest_path_folder = Path(new_dest_path)
-                generate_pages_recursive(curr_path, template_path, dest_path_folder)
+                generate_pages_recursive(
+                    curr_path, template_path, dest_path_folder, basepath
+                )
     except Exception as e:
         print(e)
