@@ -30,7 +30,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             text_blocks = node.text.split(delimiter)
             if len(text_blocks) % 2 == 0:
                 raise ValueError("Improper use of delimiter detected")
-            for i in range(len(text_blocks)):
+            for i in range(0, len(text_blocks)):
                 if text_blocks[i] != "":
                     if i % 2 != 0:
                         nodes.append(TextNode(text_blocks[i], text_type))

@@ -1,42 +1,19 @@
-from block_markdown import block_to_block_type, block_type_to_html, markdown_to_html
+from static_gen import (
+    copy_static_to_public,
+    extract_title,
+    generate_page,
+    generate_pages_recursive,
+)
 
 
 def main():
-    block = "# heading"
+    copy_static_to_public("static", "public")
 
-    type = block_to_block_type(block)
-    html_node = block_type_to_html(type, block)
-
-    block1 = "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line"
-    type1 = block_to_block_type(block1)
-
-    html_node_0 = block_type_to_html(type1, block1)
-
-    # print(html_node)
-    # print(html_node_0.value)
-    md = """```
-This is text that _should_ remain
-the **same** even with inline stuff
-```"""
-
-    ans = markdown_to_html(md)
-    # print(repr(ans.to_html()))
-
-    md = """
-    - This is a list
-    - with items
-    - and _more_ items
-
-    1. This is an `ordered` list
-    2. with items
-    3. and more items
-
-    """
-
-    node = markdown_to_html(md)
-    # html = node.to_html()
-
-    print(node.to_html())
+    # print(extract_title("# Hello"))  # "Hello"
+    # print(extract_title("## Subheading\n# Hi"))  # "Hi"
+    # print(extract_title("No title here"))
+    # generate_page("content/index.md", "template.html", "public/car/index.html")
+    generate_pages_recursive("content", "template.html", "public")
 
 
 main()

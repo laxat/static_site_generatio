@@ -30,9 +30,9 @@ def block_to_block_type(md):
         return BlockType.HEADING
     if len(lines) > 1 and lines[0].startswith("```") and lines[-1].endswith("```"):
         return BlockType.CODE
-    if md.startswith("> "):
+    if md.startswith(">"):
         for line in lines:
-            if not line.startswith("> "):
+            if not line.startswith(">"):
                 return BlockType.PARAGRAPH
         return BlockType.QUOTE
     if md.startswith("- "):
@@ -94,7 +94,7 @@ def block_type_to_html(type, block) -> HTMLNode:
                     raise ValueError("invalid quote block")
                 new_lines.append(strip_md(line))
             quote = " ".join(new_lines)
-            children = text_to_children(strip_md(quote))
+            children = text_to_children(quote)
             return ParentNode("blockquote", children)
         case BlockType.CODE:
             text = strip_md(block)
@@ -121,7 +121,6 @@ def block_type_to_html(type, block) -> HTMLNode:
 
 def strip_md(s):
     s = re.sub(r"```(?:[^\n]*)\n?([\s\S]*?)```", r"\1", s)  # fenced code blocks
-    # s = re.sub(r"`([^`]*)`", r"\1", s)  # inline code
     s = re.sub(r"^>\s?", "", s, flags=re.M)  # blockquotes
     s = re.sub(r"^#{1,6}\s*", "", s, flags=re.M)  # headings
     s = re.sub(r"^[-*+]\s+", "", s, flags=re.M)  # unordered lists
