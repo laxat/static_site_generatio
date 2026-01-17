@@ -26,16 +26,16 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         if node.text_type != TextType.TEXT:
             node_list.extend([TextNode(node.text, node.text_type, node.url)])
         else:
-            if node.text.count(delimiter) % 2 != 0:
-                raise ValueError("Improper use of delimiter detected")
-            text_blocks = node.text.split(delimiter)
             nodes = []
-            for i in range(len(text_blocks)):
+            text_blocks = node.text.split(delimiter)
+            if len(text_blocks) % 2 == 0:
+                raise ValueError("Improper use of delimiter detected")
+            for i in range(0, len(text_blocks)):
                 if text_blocks[i] != "":
                     if i % 2 != 0:
-                        nodes.append(TextNode(text_blocks[i], text_type, node.url))
+                        nodes.append(TextNode(text_blocks[i], text_type))
                     else:
-                        nodes.append(TextNode(text_blocks[i], TextType.TEXT, node.url))
+                        nodes.append(TextNode(text_blocks[i], TextType.TEXT))
             node_list.extend(nodes)
     return node_list
 
